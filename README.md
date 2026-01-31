@@ -9,6 +9,34 @@ This project uses a versioned clickstream event contract to ensure consistent in
 - Example events: [`schemas/examples/`](schemas/examples/)
 - (Optional) Avro schema: [`schemas/clickstream.avsc`](schemas/clickstream.avsc)
 
+## Architecture
+Local Python producer → S3 landing (micro-batches) → Databricks Structured Streaming → Delta Lake (Bronze/Silver/Gold) → Gold metrics tables.
+
+## Setup
+1) Install AWS CLI, Python 3.11+
+2) `pip install boto3`
+3) Configure AWS: `aws configure`
+4) (Windows) allow scripts: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+
+## Run Producer (near real-time)
+`.\scripts\02_run_producer.ps1`
+
+## Verify S3 Ingestion
+`.\scripts\aws_verify.ps1`
+
+## Run Medallion Pipeline in Databricks
+Run notebooks in order:
+1. `databricks/notebooks/01_bronze_autoloader.py`
+2. `databricks/notebooks/02_silver_stream.py`
+3. `databricks/notebooks/03_gold_metrics.py`
+
+## Verify Results
+Query Bronze/Silver/Gold Delta outputs in Databricks.
+
+## Stop & Cleanup
+Stop producer: Ctrl+C  
+Cleanup demo data: `.\scripts\cleanup_s3.ps1`
+
 ### Required fields (must exist for the event to be processed)
 - `event_id` (UUID): globally unique event identifier (used for deduplication/idempotency)
 - `schema_version` (int): schema version for contract evolution
