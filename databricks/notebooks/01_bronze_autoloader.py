@@ -43,7 +43,7 @@ query = (
     bronze_clean.writeStream
         .format("delta")
         .option("checkpointLocation", CHECKPOINT_PATH)
-        .trigger(processingTime="30 seconds")
+        .trigger(availableNow=True)
         .outputMode("append")
         .start(BRONZE_PATH)
 )
