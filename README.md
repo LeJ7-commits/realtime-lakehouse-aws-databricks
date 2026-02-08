@@ -3,7 +3,7 @@
 Near real-time clickstream ingestion and analytics pipeline using
 **micro-batch streaming**, **Databricks Structured Streaming**, and
 a **Bronze / Silver / Gold lakehouse architecture**.
-<img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/cf77e64a-ad55-4850-a020-3514f82ddbff" />
+<img width="2559" height="1595" alt="image" src="https://github.com/user-attachments/assets/2781440d-8a9e-480f-9909-fbbe7fc359bd" />
 
 ---
 
